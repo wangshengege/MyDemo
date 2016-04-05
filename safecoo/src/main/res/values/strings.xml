@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">安酷TV版</string>
+
+        <!--首页菜单数据-->
+    <string name="menu_menu1">安酷大学</string>
+    <string name="menu_menu2">安酷演播室</string>
+    <string name="menu_menu3">直播互动</string>
+    <string name="menu_menu4">安全游戏</string>
+    <string name="menu_menu5">安全视频</string>
+    <string name="menu_menu6">精品推荐</string>
+
+    <!--安酷演播室的导航-->
+    <string name="tab_item1">菜单1</string>
+    <string name="tab_item2">菜单2</string>
+    <string name="tab_item3">菜单3</string>
+</resources>

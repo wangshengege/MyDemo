@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:fitsSystemWindows="true"
+    android:paddingLeft="120px"
+    android:background="@drawable/bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50px"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <ImageView
+            android:layout_width="120px"
+            android:layout_height="75px"
+            android:src="@drawable/ic_akdx"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="65px"
+            android:layout_marginLeft="10px"
+            android:text="安酷大学"/></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="750px"
+            android:layout_marginTop="65px"
+            android:orientation="horizontal">
+           <include layout="@layout/dx_menu"/>
+            <ImageView
+                android:id="@+id/iv_dx9"
+                android:layout_width="316px"
+                android:layout_height="750px"
+                android:layout_marginLeft="20px"
+                android:src="@drawable/ic_dx9"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

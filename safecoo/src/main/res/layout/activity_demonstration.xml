@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@drawable/bg">
+    <LinearLayout
+        android:layout_width="300px"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="50px"
+        android:background="@color/trans_bg">
+        <include
+            android:id="@+id/ll_tab1"
+            layout="@layout/demo_tab_item"/>
+        <include
+            android:id="@+id/ll_tab2"
+            layout="@layout/demo_tab_item"/>
+        <include
+            android:id="@+id/ll_tab3"
+            layout="@layout/demo_tab_item"/>
+    </LinearLayout>
+    <GridView
+        android:id="@+id/gv_videolist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:horizontalSpacing="20px"
+        android:verticalSpacing="20px"
+        android:numColumns="4"/>
+</LinearLayout>

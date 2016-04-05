@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    android:paddingTop="108px"
+    android:paddingLeft="100px"
+    android:paddingRight="100px"
+    android:fitsSystemWindows="true"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15px"
+        android:layout_marginRight="15px"
+        android:gravity="bottom">
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:textSize="60px"
+        android:text="安酷智能互动云平台"/>
+        <ImageView
+            android:layout_width="272px"
+            android:layout_height="29px"
+            android:src="@drawable/ic_tel"/>
+    </LinearLayout>
+    <include layout="@layout/main_menu"/>
+</LinearLayout>

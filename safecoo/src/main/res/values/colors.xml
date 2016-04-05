@@ -1,0 +1,6 @@
+<resources>
+    <color name="primary">#9F9E9E</color>
+    <color name="menu_menu_bg1">#9F9E9E</color>
+    <color name="menu_text_bg1">#9F009E</color>
+    <color name="back_bg">#00ffffff</color>
+</resources>
