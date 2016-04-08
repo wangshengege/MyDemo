@@ -11,6 +11,7 @@ import android.webkit.WebSettings;
 import android.widget.Toast;
 
 import com.atobo.safecoo.R;
+import com.atobo.safecoo.ui.biz.BaseActivity;
 import com.baidu.mobstat.StatService;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -21,7 +22,7 @@ import arg.mylibrary.view.ProgressWebView;
 /**
  * Created by ws on 2015/11/5.
  */
-public class WebActivity extends AbstractBaseActivity {
+public class WebActivity extends BaseActivity {
     @ViewInject(R.id.webWiew)
     private ProgressWebView webView;
     private String url;

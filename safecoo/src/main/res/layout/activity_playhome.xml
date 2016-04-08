@@ -13,27 +13,32 @@
         android:orientation="horizontal"
         android:gravity="bottom">
         <ImageView
+            android:id="@+id/iv_title"
             android:layout_width="120px"
             android:layout_height="75px"
             android:src="@drawable/ic_ybs"/>
         <TextView
+            android:id="@+id/tv_title"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="65px"
             android:layout_marginLeft="10px"
             android:text="安酷演播室"/>
-        <ImageView
-            android:layout_width="180px"
-            android:layout_height="50px"
-            android:src="@drawable/ic_ybs_tb"/>
+        <LinearLayout
+            android:id="@+id/ll_tab_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="bottom"/>
     </LinearLayout>
     <GridView
         android:id="@+id/gv_videolist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="25px"
-        android:verticalSpacing="70px"
+        android:verticalSpacing="40px"
+        android:scrollbars="none"
         android:numColumns="4"
         android:layout_marginTop="50px"
         android:layout_marginBottom="70px"/>

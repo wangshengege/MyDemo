@@ -8,16 +8,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.atobo.safecoo.R;
-import com.atobo.safecoo.Utils.BrowserUtils;
+import com.atobo.safecoo.ui.biz.BaseActivity;
+import com.atobo.safecoo.utils.BrowserUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import arg.mylibrary.common.FileAccessor;
 import arg.mylibrary.ui.base.AbstractBaseActivity;
+import arg.mylibrary.utils.Tools;
 
 /**
  * Created by ZL on 2016/3/30.
  * 安全游戏
  */
-public class GameActivity extends AbstractBaseActivity implements View.OnClickListener{
+public class GameActivity extends BaseActivity implements View.OnClickListener {
     @ViewInject(R.id.gallery)
     private ImageView gallery;
     @ViewInject(R.id.btn_ph)
@@ -28,10 +31,12 @@ public class GameActivity extends AbstractBaseActivity implements View.OnClickLi
     private Button btn_fl;
     @ViewInject(R.id.ll_back)
     private View ll_back;
-    public static void startAction(Context ctx){
-        Intent intent=new Intent(ctx,GameActivity.class);
+
+    public static void startAction(Context ctx) {
+        Intent intent = new Intent(ctx, GameActivity.class);
         ctx.startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +55,9 @@ public class GameActivity extends AbstractBaseActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_ph://排行
-            break;
+                break;
             case R.id.btn_rm://热门
                 break;
             case R.id.btn_fl://分类
@@ -61,7 +66,13 @@ public class GameActivity extends AbstractBaseActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.gallery://游戏
-                BrowserUtils.startBrower(self, "http://localhost:8080/youxi/story_html5.html");
+                if (!FileAccessor.isExistExternalStore()) {
+                    Tools.showToast(self, "SD卡不可用");
+                } else {
+                    String uri="http://localhost:8080/youxi/story_html5.html";
+                  //  String uri = String.format("file://%s/anku/youxi/story_html5.html", FileAccessor.getExternalStorePath());
+                    BrowserUtils.startB(self, uri);
+                }
                 break;
         }
     }

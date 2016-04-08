@@ -24,8 +24,9 @@
             android:layout_marginLeft="10px"
             android:text="精品推荐"/>
         <ImageView
-            android:layout_width="180px"
-            android:layout_height="50px"
+            android:layout_width="270px"
+            android:layout_height="40px"
+            android:scaleType="fitXY"
             android:src="@drawable/ic_jp_tb"/>
     </LinearLayout>
     <GridView

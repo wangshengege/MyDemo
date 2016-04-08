@@ -1,4 +1,4 @@
-package com.atobo.safecoo.Utils;
+package com.atobo.safecoo.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,17 +24,17 @@ public class BrowserUtils {
          /*其实可以不用添加该Category*/
        // intent.addCategory("android.intent.category.BROWSABLE");
         intent.setData(uri);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+     //   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
          /*如果想用浏览器打开本地html文件的话，则只能通过显式intent启动浏览器*/
         boolean explicitMode=false;
         String scheme=uri.getScheme();
-        if(scheme!=null&&scheme.startsWith("file")) {
+        if(scheme!=null&&(scheme.startsWith("file") || scheme.startsWith("content"))) {
             explicitMode=true;
         }
         if(explicitMode) {
             intent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
         } else {
-            intent.addCategory("android.intent.category.BROWSABLE");
+           // intent.addCategory("android.intent.category.BROWSABLE");
         }
         context.startActivity(intent);
     }
@@ -62,5 +62,12 @@ public class BrowserUtils {
             }
         }
         return false;
+    }
+    public static void startB(Context context,String url){
+        Intent intent = new Intent();
+        intent.setAction("android.intent.action.VIEW");
+        Uri content_url = Uri.parse(url);
+        intent.setData(content_url);
+        context.startActivity(intent);
     }
 }

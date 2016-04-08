@@ -7,21 +7,26 @@ import android.widget.TextView;
 
 import com.atobo.safecoo.MainActivity;
 import com.atobo.safecoo.R;
+import com.atobo.safecoo.common.SafeCooConfig;
 import com.atobo.safecoo.net.AppDao;
+import com.atobo.safecoo.ui.biz.BaseActivity;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import arg.mylibrary.common.CommonFunction;
 import arg.mylibrary.net.RequestCall;
 import arg.mylibrary.ui.base.AbstractBaseActivity;
 import arg.mylibrary.utils.LogTools;
+import arg.mylibrary.utils.NetworkUtil;
 import arg.mylibrary.utils.Tools;
 
 /**
- * Created by ZL on 2016/3/28.
+ * Created by ws on 2016/3/28.
+ * 加载界面
  */
-public class LoadingActivity extends AbstractBaseActivity {
+public class LoadingActivity extends BaseActivity {
     @ViewInject(R.id.tv_version)
     private TextView tv_version;
     @Override
@@ -54,17 +59,5 @@ public class LoadingActivity extends AbstractBaseActivity {
                 finish();
             }
         }.start();
-    }
-
-    @Override
-    public void onResponseSuccess(RequestCall call) {
-        super.onResponseSuccess(call);
-        Tools.showToast(self,call.getJson().toString());
-    }
-
-    @Override
-    public void onResponseError(Throwable t, RequestCall call) {
-        super.onResponseError(t, call);
-        Tools.showToast(self, t.getMessage());
     }
 }

@@ -14,4 +14,6 @@ public class IPConfig extends IpConfig {
     public static final String TEST_USE="http://www.safety999.com/trial.html";
     /**安酷大学注册*/
     public static final String REGISTER="http://www.safecoo.com/start/op/signup";
+    /**获取视频*/
+    public static final String GET_VIODE="safetyapp/index.php/Home/Index/show";
 }

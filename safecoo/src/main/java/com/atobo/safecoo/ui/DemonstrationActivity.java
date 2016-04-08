@@ -7,13 +7,13 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.atobo.safecoo.R;
+import com.atobo.safecoo.ui.biz.BackActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
-import arg.mylibrary.ui.base.AbstractBaseActivity;
 import arg.mylibrary.utils.Tools;
 
 /**
- * Created by ZL on 2016/3/29.
+ * Created by ws on 2016/3/29.
  * 演播室
  */
 public class DemonstrationActivity extends BackActivity {

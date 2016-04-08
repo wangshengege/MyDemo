@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.atobo.safecoo.R;
-import com.atobo.safecoo.Utils.BrowserUtils;
+import com.atobo.safecoo.ui.biz.BackActivity;
+import com.atobo.safecoo.utils.BrowserUtils;
 
 import arg.mylibrary.common.FileAccessor;
 import arg.mylibrary.utils.LogTools;
 import arg.mylibrary.utils.Tools;
 
 /**
- * Created by ZL on 2016/3/29.
+ * Created by ws on 2016/3/29.
  * 安酷大学
  */
 public class SafeCooActivity extends BackActivity implements View.OnClickListener {
@@ -35,17 +36,21 @@ public class SafeCooActivity extends BackActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         int index= (int) v.getTag();
+        if(!FileAccessor.isExistExternalStore()){
+            Tools.showToast(self,"SD卡不可用");
+            return;
+        }
         if(index<8){
            // String path=String.format("file:///mnt/internal_sd/anku/anku0%d/story_html5.html",index+1);
-            /*String path=String.format("http://localhost:8080/anku0%d/story_html5.html",index+1);
-            Utils.startBrowser(self, path);*/
-            String path=String.format("file://%s/anku0%d/story_html5.html", FileAccessor.getExternalStorePath(),index+1);
-            LogTools.logi(self,path);
-            BrowserUtils.startBrower(self, path);
+            String path=String.format("http://localhost:8080/anku0%d/story_html5.html",index+1);
+            /*String path=String.format("file://%s/anku/anku0%d/story_html5.html", FileAccessor.getExternalStorePath(),index+1);
+            LogTools.logi(self, path);*/
+            BrowserUtils.startB(self, path);
         }else{
-                String path=String.format("file://%s/anku1/story_html5.html", FileAccessor.getExternalStorePath());
+            String path="http://localhost:8080/anku1/story_html5.html";
+               // String path=String.format("file://%s/anku/anku1/story_html5.html", FileAccessor.getExternalStorePath());
                 LogTools.logi(self, path);
-                BrowserUtils.startBrower(self, path);
+                BrowserUtils.startB(self, path);
          //   Utils.startBrowser(self, "http://localhost:8080/anku1/story_html5.html");
         }
 

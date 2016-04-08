@@ -9,18 +9,21 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.atobo.safecoo.R;
+import com.atobo.safecoo.ui.biz.BaseActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.io.File;
 import java.net.URI;
 
 import arg.mylibrary.ui.base.AbstractBaseActivity;
+import arg.mylibrary.utils.LogTools;
 import arg.mylibrary.utils.Tools;
 
 /**
- * Created by ZL on 2016/3/25.
+ * Created by ws on 2016/3/25.
+ * 视频播放界面
  */
-public class VideoPlayActivity extends AbstractBaseActivity {
+public class VideoPlayActivity extends BaseActivity {
     @ViewInject(R.id.videoView)
     private VideoView videoView;
     private MediaController mediaco;
@@ -55,7 +58,7 @@ public class VideoPlayActivity extends AbstractBaseActivity {
         Intent intent=getIntent();
         int type=intent.getIntExtra("type",0);
         path=intent.getStringExtra("path");
-
+        LogTools.logd(self,path);
         mediaco=new MediaController(this);
         videoView.setMediaController(mediaco);
         mediaco.setMediaPlayer(videoView);

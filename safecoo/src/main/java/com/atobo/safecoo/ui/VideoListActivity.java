@@ -6,22 +6,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.GridView;
-import android.widget.ListView;
 
 import com.atobo.safecoo.R;
 import com.atobo.safecoo.adapter.VideoListAdapter;
+import com.atobo.safecoo.ui.biz.BackActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 
-import arg.mylibrary.ui.base.AbstractBaseActivity;
-import arg.mylibrary.utils.LogTools;
 import arg.mylibrary.utils.Tools;
 
 /**

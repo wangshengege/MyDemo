@@ -1,4 +1,4 @@
-package com.atobo.safecoo.ui;
+package com.atobo.safecoo.ui.biz;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,9 +12,10 @@ import arg.mylibrary.ui.base.AbstractBaseActivity;
 import arg.mylibrary.utils.PxUtil;
 
 /**
- * Created by ZL on 2016/3/30.
+ * Created by ws on 2016/3/30.
+ * 带返回键的activity的基类返回键的宽度120px,需要子布局自己控制
  */
-public abstract class BackActivity extends AbstractBaseActivity {
+public abstract class BackActivity extends BaseActivity {
     private LinearLayout ll_group;
 
     @Override

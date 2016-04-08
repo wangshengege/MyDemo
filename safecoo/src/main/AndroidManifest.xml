@@ -49,10 +49,16 @@
         <activity android:name=".ui.SafeCooActivity"/>
         <activity android:name=".ui.DemonstrationActivity"/>
         <activity android:name=".ui.GameActivity"/>
-        <activity android:name=".ui.PlayActivity"/>
-        <activity android:name=".ui.TuijianActivity"/>
+        <activity android:name=".ui.PlayHomeActivity"/>
+        <activity android:name=".ui.RecommendActivity"/>
         <activity android:name=".ui.SafeActivity"/>
         <activity android:name=".ui.InteractionActivity"/>
+        <activity android:name=".ui.video.IjkVideoActicity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+
         <receiver android:name=".common.BootReceiver"
             android:enabled="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
@@ -66,6 +72,12 @@
             </intent-filter>
 
         </receiver>
+
+
+        <service
+            android:name=".common.PolyvDemoService"
+            />
+
 
         <meta-data
             android:name="design_width"
@@ -109,7 +121,14 @@
         <meta-data
             android:name="BaiduMobAd_WIFI_LOCATION"
             android:value="true" />
-
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="56fcb78be0f55aede6000e1c" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Umeng" >
+        </meta-data>
     </application>
 
 </manifest>

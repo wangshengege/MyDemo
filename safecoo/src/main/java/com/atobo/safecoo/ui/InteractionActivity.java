@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.atobo.safecoo.R;
+import com.atobo.safecoo.ui.biz.BackActivity;
 
 /**
- * Created by ZL on 2016/3/30.
+ * Created by ws on 2016/3/30.
+ * 直播互动
  */
 public class InteractionActivity extends BackActivity {
     public static void startAction(Context ctx){

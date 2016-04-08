@@ -6,18 +6,22 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 
 import arg.mylibrary.net.BaseDao;
+import arg.mylibrary.net.JsonCallback;
+import arg.mylibrary.net.RequestCall;
 
 /**
- * Created by ZL on 2016/3/29.
+ * Created by ws on 2016/3/29.
  */
 public class AppDao extends BaseDao {
-    public static void login(RequestCallBack<String> callBack){
-         HttpUtils httpClient=new HttpUtils();
+    /**获取视频数据
+     * @param type 视频类型（大范围 ）
+     * @param pid 视频分类（小范围）
+     * */
+    public static void getVedio(String type,String pid,JsonCallback callBack){
         RequestParams params=new RequestParams();
-        params.addBodyParameter("login_form","raoyuqing");
-        params.addBodyParameter("yuqing", "yuqing");
-        httpClient.send(HttpRequest.HttpMethod.POST, "http://www.safecoo.com/start",
-                params, callBack);
+        params.addQueryStringParameter("type",type);
+        params.addQueryStringParameter("pid",pid);
+        request(new RequestCall(IPConfig.GET_VIODE), params, callBack);
     }
 
 }
