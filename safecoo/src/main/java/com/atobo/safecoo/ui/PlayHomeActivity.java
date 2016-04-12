@@ -3,6 +3,10 @@ package com.atobo.safecoo.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -177,18 +181,22 @@ public class PlayHomeActivity extends BackActivity {
         for (int i = 0; i < videoType.size(); i++) {
             TextView tv=new TextView(self);
             tv.setText(videoType.get(i).getTitle());
-            tv.setLayoutParams(new AutoLinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            AutoLinearLayout.LayoutParams params=new AutoLinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.gravity= Gravity.CENTER;
+            tv.setLayoutParams(params);
             if(i==0){
                 tv=getSelText(tv);
                 selectTab=tv;
             }else{
                 tv=getNorText(tv);
-                tv.setPadding(PxUtil.dip2px(self,10),0,0,0);
             }
             tv.setTag(i);
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(v==selectTab){
+                        return;
+                    }
                     int tag = (int) v.getTag();
                     getNorText(selectTab);
                     selectTab=getSelText ((TextView) v);
@@ -200,13 +208,19 @@ public class PlayHomeActivity extends BackActivity {
     //未选中的选项卡
     private TextView getNorText(TextView tv){
         tv.setTextColor(getResources().getColor(R.color.gray));
-        tv.setTextSize(PxUtil.dip2px(self, 7));
+        tv.setTextSize(PxUtil.dip2px(self, 4));
+        tv.setBackgroundResource(0);
+        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv.getLayoutParams();
+        layoutParams.setMargins(PxUtil.dip2px(self,10),0,0,0);
         return tv;
     }
     //选中的选项卡
     private TextView getSelText(TextView tv){
-        tv.setTextColor(getResources().getColor(R.color.green_90c));
-        tv.setTextSize(PxUtil.dip2px(self, 10));
+        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv.getLayoutParams();
+        layoutParams.setMargins(PxUtil.dip2px(self,10),0,0,0);
+        tv.setTextColor(getResources().getColor(R.color.white));
+        tv.setTextSize(PxUtil.dip2px(self, 4));
+        tv.setBackgroundResource(R.drawable.bg_tab_text);
         return tv;
     }
     //解析数组

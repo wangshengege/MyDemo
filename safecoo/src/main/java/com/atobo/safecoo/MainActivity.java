@@ -14,6 +14,8 @@
 
 package com.atobo.safecoo;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -45,8 +47,10 @@ public class MainActivity extends BaseActivity {
             {R.id.ll_menu5, R.string.menu_menu5, R.drawable.ic_menu05},
             {R.id.ll_menu6, R.string.menu_menu6, R.drawable.ic_menu06},
     };
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
+    public static void startAction(Context ctx){
+        Intent intent=new Intent(ctx,MainActivity.class);
+        ctx.startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,65 +100,5 @@ public class MainActivity extends BaseActivity {
             }
         }
     };
-    long time=0;
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_BACK){
-            YSApplication.getInstance().exit();
-       /* if(Tools.getTimeStamp()-time<1000){
-            YSApplication.getInstance().exit();
-        }*/
-        }
-       /* int f = 0;
-        if (focus == null) {
-            f = 4;
-        } else
-            f = (int) focus.getTag();
-
-
-        if (event.KEYCODE_DPAD_UP == keyCode) {  //如果按下的是上键
-            if(f==3){
-                btns[1].requestFocus();
-            }
-            if(f==4){
-                btns[2].requestFocus();
-            }
-            return true;
-        }
-
-        if (event.KEYCODE_DPAD_DOWN == keyCode) {  //如果按下的是下键
-                if(f==1){
-                    btns[3].requestFocus();
-                }
-                if(f==2){
-                    btns[4].requestFocus();
-                }
-            return true;
-        }
-
-        if (event.KEYCODE_DPAD_LEFT == keyCode) {  //如果按下的是左键
-            if (f == 0) {
-                btns[4].requestFocus();
-            } else {
-                btns[f - 1].requestFocus();
-            }
-            return true;
-        }
-
-        if (event.KEYCODE_DPAD_RIGHT == keyCode) {  //如果按下的是右键
-            if (f == 4) {
-                btns[0].requestFocus();
-            } else {
-                btns[f + 1].requestFocus();
-            }
-            return true;
-        }
-        if(event.KEYCODE_DPAD_CENTER == keyCode){
-            listener.onClick( btns[f]);
-            return true;
-        }*/
-        return super.onKeyDown(keyCode, event);
-    }
-
 
 }
