@@ -8,11 +8,12 @@ import arg.mylibrary.utils.Tools;
  * 网络地址
  */
 public class IpConfig {
-    //public static final String IP = "http://api.lvcong.com";
-    public static final String IP="http://www.safety999.com";
-    public static final String PORT = "8787";
-
-
+    /**项目域名*/
+  //  public static final String IP = "http://192.168.0.11:80";
+    public static final String IP="http://www.safecoo.com";
+    //public static final String PORT = "8787";
+    /**项目文件夹*/
+    public static final String FOLDER="safetym/safetyapp/index.php";
 
 
 

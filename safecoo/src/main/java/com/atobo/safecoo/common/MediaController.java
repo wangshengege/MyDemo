@@ -69,7 +69,7 @@ public class MediaController extends IjkBaseMediaController {
 	private LinearLayout bitrateLinearLayout = null;
 	private SparseArray<Button> bitRateBtnArray = null;
 	private OnPreNextListener onPreNextListener;
-
+	private boolean canConfigurationChanged=false;
 	public MediaController(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		mRoot = this;
@@ -96,6 +96,24 @@ public class MediaController extends IjkBaseMediaController {
 		mContext = context;
 		mAM = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 		return true;
+	}
+
+	public boolean isCanConfigurationChanged() {
+		return canConfigurationChanged;
+	}
+
+	public void setCanConfigurationChanged(boolean canConfigurationChanged) {
+		this.canConfigurationChanged = canConfigurationChanged;
+		if( btn_boardChange==null){
+			return;
+		}
+		if(canConfigurationChanged ){
+			btn_boardChange.setVisibility(VISIBLE);
+			btn_boardChange.setEnabled(true);
+		}else {
+			btn_boardChange.setVisibility(INVISIBLE);
+			btn_boardChange.setEnabled(false);
+		}
 	}
 
 	@Override
@@ -155,6 +173,7 @@ public class MediaController extends IjkBaseMediaController {
 		mRewButton.setOnClickListener(mRewListener);
 		btn_boardChange = (ImageButton) v.findViewById(R.id.landscape);
 		btn_boardChange.setOnClickListener(mBoardListener);
+		setCanConfigurationChanged(canConfigurationChanged);
 		btn_videoChange = (ImageButton) v.findViewById(R.id.videochange);
 		btn_videoChange.setTag("0");
 		btn_videoChange.setOnClickListener(mVideoListener);

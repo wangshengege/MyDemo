@@ -1,1 +1,1 @@
-include ':mylibrary', ':safecoo'
+include ':mylibrary', ':safecoo',  ':PushSDK'

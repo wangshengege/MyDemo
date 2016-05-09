@@ -2,6 +2,7 @@ package com.atobo.safecoo.utils;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.os.Message;
 
 /**
  * 作者: ws
@@ -16,5 +17,11 @@ public class SafeCooUtils {
      */
     public static boolean isTablet(Context context) {
         return (context.getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+    public static Message getMsg(int what,Object obj){
+        Message msg=new Message();
+        msg.what=what;
+        msg.obj=obj;
+        return msg;
     }
 }

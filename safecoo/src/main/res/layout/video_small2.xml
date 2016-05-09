@@ -3,7 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#000000"
     android:baselineAligned="false"
     android:orientation="vertical" >
 
@@ -24,11 +24,11 @@
         <!-- logo -->
         <ImageView 
             android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150px"
+            android:layout_height="35px"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:background="@drawable/polyv_logo"
+            android:src="@drawable/polyv_logo"
             android:visibility="gone"/>
         
         <!-- 当广告是视频广告时，倒计时view，文本使用String.format("自定义文本 %d自定义文本") 来匹配 -->

@@ -1,6 +1,7 @@
 package com.atobo.safecoo.ui.video;
 
 import arg.mylibrary.ui.base.AbstractBaseActivity;
+import arg.mylibrary.utils.LogTools;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import android.app.Activity;
 import android.content.Context;
@@ -80,6 +81,7 @@ public class IjkVideoActicity extends AbstractBaseActivity {
 		wm.getDefaultDisplay().getSize(point);
 		w = point.x;
 		h = point.y;
+		LogTools.logi(self,"w:"+w+"h:"+h);
 		//小窗口的比例
 		float ratio = (float) 4 / 3;
 		adjusted_h = (int) Math.ceil((float) w / ratio);
@@ -296,6 +298,7 @@ public class IjkVideoActicity extends AbstractBaseActivity {
 	 */
 	public void changeToLandscape(){
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(h,w);
+		LogTools.logi(self,"changeToLandscape w:"+w+"h:"+h);
 		rl.setLayoutParams(p);
 		stopPosition = videoView.getCurrentPosition();
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -306,8 +309,9 @@ public class IjkVideoActicity extends AbstractBaseActivity {
 	 */
 	public void changeToPortrait(){
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(w,adjusted_h);
+		LogTools.logi(self,"changeToPortrait w:"+w+"h:"+h+"adjust_h"+adjusted_h);
 		rl.setLayoutParams(p);
-		stopPosition = videoView.getCurrentPosition();
+		videoView.setLayoutParams(p);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 
@@ -437,8 +441,9 @@ public class IjkVideoActicity extends AbstractBaseActivity {
 		/** 横屏 */
 		landScape(3),
 		/** 竖屏 */
-		portrait(4);
-
+		portrait(4),
+		/**默认*/
+		defaults(5);
 		private final int code;
 		private PlayMode(int code) {
 			this.code = code;
@@ -458,6 +463,8 @@ public class IjkVideoActicity extends AbstractBaseActivity {
 					return landScape;
 				case 4:
 					return portrait;
+				case 5:
+					return defaults;
 			}
 
 			return null;

@@ -1,16 +1,50 @@
 <resources>
-    <string name="app_name">安酷TV版</string>
+    <string name="app_name">安酷云TV</string>
 
         <!--首页菜单数据-->
     <string name="menu_menu1">安酷大学</string>
-    <string name="menu_menu2">安酷演播室</string>
+    <string name="menu_menu2">安酷视频</string>
     <string name="menu_menu3">直播互动</string>
     <string name="menu_menu4">安全游戏</string>
-    <string name="menu_menu5">安全视频</string>
+    <string name="menu_menu5">企业专区</string>
     <string name="menu_menu6">精品推荐</string>
 
-    <!--安酷演播室的导航-->
-    <string name="tab_item1">菜单1</string>
-    <string name="tab_item2">菜单2</string>
-    <string name="tab_item3">菜单3</string>
+    <string name="versionnum">V1.0.0</string>
+    <string name="press_again_exit">再按一次退出</string>
+    <string name="about">关于</string>
+    <string name="report">反馈建议</string>
+    <string name="setting">设置</string>
+    <string name="server_control_charset">传输编码</string>
+    <string name="utf8_title">UTF-8编码</string>
+    <string name="utf8_summary">系统FTP默认编码</string>
+    <string name="gbk_title">GBK编码</string>
+    <string name="gbk_summary">中文出现乱码时选择此项</string>
+    <string name="stay_awake_title">保持唤醒状态</string>
+    <string name="stay_awake_summary">使用FTP时屏幕不会休眠</string>
+    <string name="ftp_transfer_secure">传输安全</string>
+    <string name="ftp_port_number">端口号</string>
+    <string name="ftp_account_req_notice">您的用户名与密码长度必须为4－16字符。可以使用特殊符号，字母区分大小写。</string>
+    <string name="ftp_open_port_error">无法打开端口，请确认网络已连接或重新设置端口号。</string>
+    <string name="ftp_anonymous_login">匿名登录</string>
+    <string name="ftp_username_and_passworld">用户名与密码</string>
+    <string name="ftp_username_hint">用户名</string>
+    <string name="ftp_password_hint">密码</string>
+    <string name="ftp_invalid_username_or_password">用户名或密码无效</string>
+    <string name="start_server">启动服务</string>
+    <string name="stop_server">停止服务</string>
+    <string name="notif_server_starting">远程管理服务已启动</string>
+    <string name="notif_title">远程管理服务正在运行</string>
+    <string name="wifi_state">WLAN状态</string>
+    <string name="instruction_pre">启动后可以从电脑端远程管理手机文件</string>
+    <string name="instruction">请在“我的电脑”地址栏中输入：</string>
+    <string name="no_wifi">无WiFi网络</string>
+    <string name="no_wifi_hint">无WiFi网络,点击以查看WiFi设置</string>
+    <string name="storage_warning">外部存储不可用.</string>
+    <string name="app_error">应用程序错误</string>
+    <string name="app_error_message">很抱歉，应用程序出现错误，即将退出。\n请选择邮件的方式将此错误报告提交给我，我会尽快修复这个问题，谢谢！</string>
+    <string name="submit_report">提交报告</string>
+    <string name="username_validation_error">用户名至少需要包括一个或更多字符，不允许为空。</string>
+    <string name="password_validation_error">密码至少需要包括一个或更多字符，不允许为空。</string>
+    <string name="port_validation_error">端口号必须在 1 至 65535 之间。</string>
+
 </resources>

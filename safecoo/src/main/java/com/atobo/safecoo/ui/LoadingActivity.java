@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.atobo.safecoo.MainActivity;
 import com.atobo.safecoo.R;
+import com.atobo.safecoo.common.UmengMsgManager;
 import com.atobo.safecoo.ui.biz.BaseActivity;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -25,7 +26,6 @@ public class LoadingActivity extends BaseActivity {
         /* AppDao.login(new RequestCallBack<String>() {
              @Override
              public void onSuccess(ResponseInfo<String> responseInfo) {
-                 TextHtmlActivity.startAction(self, responseInfo.result);
              }
 
              @Override
@@ -45,5 +45,6 @@ public class LoadingActivity extends BaseActivity {
                 finish();
             }
         }.start();
+        UmengMsgManager.openPush();
     }
 }

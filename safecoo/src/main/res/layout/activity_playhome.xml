@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:textSize="65px"
             android:layout_marginLeft="10px"
+            android:textColor="@color/white"
             android:text="安酷演播室"/>
         <LinearLayout
             android:id="@+id/ll_tab_group"
@@ -38,7 +39,6 @@
         android:layout_height="match_parent"
         android:horizontalSpacing="25px"
         android:verticalSpacing="40px"
-        android:scrollbars="none"
         android:numColumns="4"
         android:layout_marginTop="50px"
         android:layout_marginBottom="70px"/>

@@ -25,6 +25,7 @@
             android:layout_marginLeft="10px"
             android:layout_weight="1"
             android:text="直播互动"
+            android:textColor="@color/white"
             android:textSize="65px" />
 
     </LinearLayout>

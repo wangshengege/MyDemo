@@ -31,7 +31,7 @@ public abstract class AbstractBaseActivity extends AutoLayoutActivity implements
 		// 取消标题栏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		myApplication = YSApplication.getInstance();
+		myApplication = (YSApplication) YSApplication.getContext();
 		myApplication.addActivity(this);
 		self=this;
 		AutoLayout.getInstance().auto(this);

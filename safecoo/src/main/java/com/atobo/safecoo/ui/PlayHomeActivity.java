@@ -1,7 +1,9 @@
 package com.atobo.safecoo.ui;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelXorXfermode;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -69,6 +71,7 @@ public class PlayHomeActivity extends BackActivity {
     private int type;
     //选择的视频类型
     private TextView selectTab;
+    private ProgressDialog pd;
     private ArrayList<VideoTypeEntity> videoType;
     private int[][] res = {{R.drawable.ic_ybs1, R.drawable.ic_ybs2,
             R.drawable.ic_ybs3, R.drawable.ic_ybs4,
@@ -92,7 +95,7 @@ public class PlayHomeActivity extends BackActivity {
      * @param type 显示类型，0是播放室，1是安全视频，2是精品推荐
      */
     public static void startAction(Context ctx, int type) {
-        if(type>2 || type<0){
+        if (type > 2 || type < 0) {
             return;
         }
         Intent intent = new Intent(ctx, PlayHomeActivity.class);
@@ -109,23 +112,24 @@ public class PlayHomeActivity extends BackActivity {
         type = intent.getIntExtra("type", 0);
 
         if (!SafeCooConfig.PREVIEW) {
-            AppDao.getVedio("0", "10", self);
+           getData(-1);
         } else {
-            ImageView iv=new ImageView(self);
+            ImageView iv = new ImageView(self);
             iv.setLayoutParams(new AutoLinearLayout.LayoutParams(AutoLinearLayout.LayoutParams.WRAP_CONTENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT));
             iv.setImageResource(TITLE_RES[type][2]);
             ll_tab_group.addView(iv);
-            for (int i = 0; i < res.length; i++) {
+            for (int i = 0; i < res[type].length; i++) {
                 VideoEntiity en = new VideoEntiity();
-                en.setViodeoImg("drawable://" + res[i][type]);
+                en.setViodeoImg("drawable://" + res[type][i]);
                 items.add(en);
             }
         }
         mAdapter = new PalyAdapter(self, items);
         initView();
     }
+
     //初始化界面
-    private void initView(){
+    private void initView() {
         iv_title.setImageResource(TITLE_RES[type][1]);
         tv_title.setText(TITLE_RES[type][0]);
         gv_videolist.setAdapter(mAdapter);
@@ -133,13 +137,17 @@ public class PlayHomeActivity extends BackActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (!SafeCooConfig.PREVIEW) {
-                    IjkVideoActicity.intentTo(self, IjkVideoActicity.PlayMode.landScape, IjkVideoActicity.PlayType.vid, items.get(position).getPath(), false);
+                    IjkVideoActicity.intentTo(self, IjkVideoActicity.PlayMode.defaults, IjkVideoActicity.PlayType.vid, items.get(position).getPath(), true);
                 } else {
+                    if (position < 0 || position > 2) {
+                        return;
+                    }
                     onClikOfline(position);
                 }
             }
         });
     }
+
     //离线版本的点击
     private void onClikOfline(int position) {
         if (position > 2) {
@@ -155,76 +163,127 @@ public class PlayHomeActivity extends BackActivity {
         } else {
             path = String.format("%s/anku/ak%d.mp4", FileAccessor.getExternalStorePath(), position + 1);
         }
+       // VideoPlayerActivity.startAction(self, path);
         VideoPlayActivity.startAction(self, path);
     }
 
     @Override
     public void onResponseSuccess(RequestCall call) {
         super.onResponseSuccess(call);
-        if(videoType==null){
-            praseTab(call.getJson());
+        if(call.getState()==200){
+        if (videoType == null) {
+            praseTab(JSONUtils.getJJsonArr(call.getJson(), "vedioCate"));
         }
-        JSONArray jsarr = JSONUtils.getJJsonArr(call.getJson(), "4");
-        praseList(jsarr);
+        JSONArray jsarr = JSONUtils.getJJsonArr(call.getJson(), "vedio");
+        praseList(jsarr);}else{
+            Tools.showToast(self,call.getMsg());
+        }
     }
 
     //解析数据类型
-    private void praseTab(JSONObject json) {
-        videoType=new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            JSONObject js=JSONUtils.getJJson(json,i+1+"");
-            videoType.add(new VideoTypeEntity(js));
+    private void praseTab(JSONArray json) {
+        videoType = new ArrayList<>();
+        try {
+            for (int i = 0; i < json.length(); i++) {
+                videoType.add(new VideoTypeEntity(json.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         setTab();
     }
-    private void setTab(){
+
+    private void setTab() {
         for (int i = 0; i < videoType.size(); i++) {
-            TextView tv=new TextView(self);
+            TextView tv = new TextView(self);
             tv.setText(videoType.get(i).getTitle());
-            AutoLinearLayout.LayoutParams params=new AutoLinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.gravity= Gravity.CENTER;
+            AutoLinearLayout.LayoutParams params = new AutoLinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
             tv.setLayoutParams(params);
-            if(i==0){
-                tv=getSelText(tv);
-                selectTab=tv;
-            }else{
-                tv=getNorText(tv);
+            if (i == 0) {
+                tv = getSelText(tv);
+                selectTab = tv;
+            } else {
+                tv = getNorText(tv);
             }
-            tv.setTag(i);
+            tv.setTag(videoType.get(i).getType());
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(v==selectTab){
+                    if (v == selectTab) {
                         return;
                     }
-                    int tag = (int) v.getTag();
+                    int type = (int) v.getTag();
+                    getData(type);
                     getNorText(selectTab);
-                    selectTab=getSelText ((TextView) v);
+                    selectTab = getSelText((TextView) v);
                 }
             });
             ll_tab_group.addView(tv);
         }
     }
+    //视频小类型
+    private void getData(int t){
+        String pageType;
+       // 1是安酷tv，2是精品推荐
+        if(type==2){//精品推荐
+            pageType="1";
+        }else{
+            pageType="0";
+        }
+        if(pd==null){
+            pd=new ProgressDialog(self);
+            pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            pd.setIndeterminate(true);
+            pd.setMessage("正在加载。。。");
+            pd.setCanceledOnTouchOutside(false);
+        }
+        if (!pd.isShowing()){
+            pd.show();
+        }
+        AppDao.getVedio(pageType, t == -1 ? "" : String.valueOf(t), self);
+    }
     //未选中的选项卡
-    private TextView getNorText(TextView tv){
+    private TextView getNorText(TextView tv) {
         tv.setTextColor(getResources().getColor(R.color.gray));
-        tv.setTextSize(PxUtil.dip2px(self, 4));
+        tv.setTextSize(getTextSize());
         tv.setBackgroundResource(0);
-        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv.getLayoutParams();
-        layoutParams.setMargins(PxUtil.dip2px(self,10),0,0,0);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tv.getLayoutParams();
+        layoutParams.setMargins(PxUtil.dip2px(self, 10), 0, 0, 0);
         return tv;
     }
+    //根据屏幕分辨率获取文字大小
+    private int getTextSize(){
+       /*int w= PxUtil.getScreenWidth(self);
+        LogTools.logi(PlayHomeActivity.this,"w:"+w);
+        if (w<=1290){//低清
+            return w/100;
+        }else if(w>1290 && w< 1930){//高清
+            return w/150;
+        }else {//超清
+            return w/200;
+        }*/
+        int textSize=PxUtil.sp2px(self,6);
+        LogTools.logi(self,"testSize:"+textSize);
+        if (textSize<15){
+            textSize=17;
+        }else if(textSize > 25){
+            textSize=15;
+        }
+        return textSize;
+    }
     //选中的选项卡
-    private TextView getSelText(TextView tv){
-        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) tv.getLayoutParams();
-        layoutParams.setMargins(PxUtil.dip2px(self,10),0,0,0);
+    private TextView getSelText(TextView tv) {
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tv.getLayoutParams();
+        layoutParams.setMargins(PxUtil.dip2px(self, 10), 0, 0, 0);
         tv.setTextColor(getResources().getColor(R.color.white));
-        tv.setTextSize(PxUtil.dip2px(self, 4));
+        tv.setTextSize(getTextSize());
         tv.setBackgroundResource(R.drawable.bg_tab_text);
         return tv;
     }
     //解析数组
     private void praseList(JSONArray jsarr) {
+        items.clear();
         if (Tools.isEmpty(jsarr) || jsarr.length() < 1) {
             Tools.showToast(self, "数据为空");
         } else {
@@ -232,10 +291,18 @@ public class PlayHomeActivity extends BackActivity {
                 for (int i = 0; i < jsarr.length(); i++) {
                     items.add(new VideoEntiity(jsarr.getJSONObject(i)));
                 }
-                mAdapter.notifyDataSetChanged();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onFinishRequest(RequestCall call) {
+        super.onFinishRequest(call);
+        if(pd!=null && pd.isShowing()){
+            pd.dismiss();
         }
     }
 }

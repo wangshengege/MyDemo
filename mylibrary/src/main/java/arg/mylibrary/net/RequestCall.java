@@ -15,7 +15,7 @@ public class RequestCall {
     private int state = -1;
     private JSONObject json;
     private String msg;
-    private boolean isAnalytical;//是否解析
+    private boolean isAnalytical=true;//是否解析
 
     /**
      * 无参构造函数
@@ -31,6 +31,13 @@ public class RequestCall {
      */
     public RequestCall(String url) {
         this.url = url;
+    }
+
+    public boolean isAnalytical() {
+        return isAnalytical;
+    }
+    public void setIsAnalytical(boolean isAnalytical) {
+        this.isAnalytical = isAnalytical;
     }
 
     /**
@@ -62,7 +69,7 @@ public class RequestCall {
         if (url.contains("http://")) {
             return url;
         } else {
-            url = String.format("%s/%s", IpConfig.IP, url);
+            url = String.format("%s/%s/%s/", IpConfig.IP, IpConfig.FOLDER,url);
             return url;
         }
     }
@@ -105,7 +112,7 @@ public class RequestCall {
         if (isAnalytical) {
             getAnalyticalState(json);
             getAnalyticalMsg(json);
-            this.json = Tools.getJJson(json, "Data");
+            this.json = Tools.getJJson(json, "data");
         }
     }
 
@@ -113,9 +120,9 @@ public class RequestCall {
      * 获取解析状态码
      */
     private void getAnalyticalState(JSONObject json) {
-        state = Tools.getJNum(json, "State");
+        state = Tools.getJNum(json, "code");
         if (state == -1) {
-            state = Tools.getJNum(json, "state");
+            state = Tools.getJNum(json, "Code");
         }
     }
 
@@ -123,9 +130,9 @@ public class RequestCall {
      * 获取解析信息
      */
     private void getAnalyticalMsg(JSONObject json) {
-        msg = Tools.getJStr(json, "Msg");
+        msg = Tools.getJStr(json, "message");
         if (Tools.isEmpty(msg)) {
-            msg = Tools.getJStr(json, "msg");
+            msg = Tools.getJStr(json, "Message");
         }
     }
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/item_selector"
+    android:padding="10px"
+    android:gravity="center">
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="120px"
+        android:layout_height="120px"/>
+    <TextView
+        android:id="@+id/tv_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:textSize="30px"
+        android:textColor="@color/white"/>
+</LinearLayout>

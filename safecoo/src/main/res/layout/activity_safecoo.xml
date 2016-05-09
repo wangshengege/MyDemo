@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:textSize="65px"
             android:layout_marginLeft="10px"
+            android:textColor="@color/white"
             android:text="安酷大学"/></LinearLayout>
 
         <LinearLayout
@@ -34,10 +35,11 @@
            <include layout="@layout/dx_menu"/>
             <ImageView
                 android:id="@+id/iv_dx9"
-                android:layout_width="316px"
-                android:layout_height="750px"
+                android:layout_width="330px"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="20px"
-                android:src="@drawable/ic_dx9"/>
+                android:src="@drawable/ic_dx9"
+                android:background="@drawable/item_selector"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -223,7 +223,15 @@ public class FileAccessor {
 		}
 		return null;
 	}
-
+	/**
+	 * 外置存储卡
+	 */
+	public static File getExternalStore(){
+		if (isExistExternalStore()) {
+			return Environment.getExternalStorageDirectory();
+		}
+		return null;
+	}
 	/**
 	 * 是否有外存卡
 	 * 
@@ -244,7 +252,7 @@ public class FileAccessor {
 	 * @return
 	 */
 	public static String getAppContextPath() {
-		return YSApplication.getInstance().getFilesDir().getAbsolutePath();
+		return YSApplication.getContext().getFilesDir().getAbsolutePath();
 	}
 
 	/**

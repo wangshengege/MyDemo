@@ -82,6 +82,9 @@ public class ImgLoadUtils {
         }
         getInstance().imageLoader.displayImage(url, imageView, options, listener);
     }
+    public static ImageLoader getImageLoader(){
+        return getInstance().imageLoader;
+    }
     /**
      * 获取显示设置类
      * @param round 圆角

@@ -11,14 +11,7 @@ import java.util.List;
 import arg.mylibrary.ui.base.AbstractBaseActivity;
 
 public class YSApplication extends Application implements Thread.UncaughtExceptionHandler {
-	private static YSApplication instance;
 	private static Context ctx;
-	public static YSApplication getInstance() {
-		if (instance == null) {
-			instance = new YSApplication();
-		}
-		return instance;
-	}
 
 	/** 获取全局的上下文 */
 	public static Context getContext() {

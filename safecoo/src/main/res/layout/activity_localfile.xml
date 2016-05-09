@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/bg"
+    android:paddingLeft="120px"
+    android:paddingRight="120px">
+
+    <Button
+        android:id="@+id/btn_local"
+        android:layout_marginTop="50px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:background="@drawable/theme_btn_selector"
+        android:visibility="gone"
+        android:text="本地文件"/>
+    <Button
+        android:id="@+id/btn_ftp"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:textColor="@color/white"
+        android:textSize="35px"
+        android:background="@drawable/theme_btn_selector"
+        android:layout_marginTop="20px"
+        android:text="FTP管理器" />
+    <Button
+        android:id="@+id/btn_smb"
+        android:layout_width="match_parent"
+        android:layout_height="110px"
+        android:textColor="@color/white"
+        android:layout_marginTop="20px"
+        android:textSize="35px"
+        android:background="@drawable/theme_btn_selector"
+        android:text="网络邻居" />
+</LinearLayout>

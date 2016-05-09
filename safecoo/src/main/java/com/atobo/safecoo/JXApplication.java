@@ -1,5 +1,9 @@
 package com.atobo.safecoo;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -7,6 +11,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.atobo.safecoo.common.PolyvDemoService;
+import com.atobo.safecoo.common.UmengMsgManager;
+import com.atobo.safecoo.ftp.FtpServerService;
+import com.atobo.safecoo.ui.ftp.FtpActivity;
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.easefun.polyvsdk.SDKUtil;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
@@ -19,13 +26,29 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
 import java.io.File;
+import java.net.InetAddress;
 
 import arg.mylibrary.biz.YSApplication;
+import arg.mylibrary.utils.LogTools;
 
 /**
- * Created by ZL on 2016/3/29.
+ * Created by ws on 2016/3/29.
  */
 public class JXApplication extends YSApplication {
+    private static JXApplication instance;
+    private static Context ctx;
+    public static JXApplication getInstance() {
+        if (instance == null) {
+            instance = new JXApplication();
+        }
+        return instance;
+    }
+
+    /** 获取全局的上下文 */
+    public static Context getContext() {
+        return ctx;
+    }
+    private final int NOTIFICATIONID = 7890;
     @Override
     public void uncaughtException(Thread thread, Throwable ex) {
         super.uncaughtException(thread, ex);
@@ -68,6 +91,8 @@ public class JXApplication extends YSApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        ctx = getApplicationContext();
+        UmengMsgManager.init();
         File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "safecoo/Cache");
         // This configuration tuning is custom. You can tune every option, you
         // may tune some of them,
@@ -118,5 +143,54 @@ public class JXApplication extends YSApplication {
             PolyvSDKClient client = PolyvSDKClient.getInstance();
             client.setConfig(config);
         }
+    }
+    public void setupNotification(Context context) {
+        // Get NotificationManager reference
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager nm = (NotificationManager) context
+                .getSystemService(ns);
+
+        // get ip address
+        InetAddress address = FtpServerService.getLocalInetAddress();
+        if (address == null) {
+            LogTools.loge(this, "Unable to retreive the local ip address");
+            return;
+        }
+        String iptext = "ftp://" + address.getHostAddress() + ":"
+                + FtpServerService.getPort() + "/";
+
+        // Instantiate a Notification
+        int icon = R.drawable.notification;
+        CharSequence tickerText = String.format(
+                context.getString(R.string.notif_server_starting), iptext);
+        long when = System.currentTimeMillis();
+        Notification notification = new Notification(icon, tickerText, when);
+
+        // Define Notification's message and Intent
+        CharSequence contentTitle = context.getString(R.string.notif_title);
+        CharSequence contentText = iptext;
+
+        Intent notificationIntent = new Intent(context, FtpActivity.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+                notificationIntent, 0);
+        notification.setLatestEventInfo(context, contentTitle, contentText,
+                contentIntent);
+        notification.flags |= Notification.FLAG_ONGOING_EVENT;
+
+        // Pass Notification to NotificationManager
+        nm.notify(NOTIFICATIONID, notification);
+
+        LogTools.showLoge( "Notication setup done");
+    }
+
+    public void clearNotification(Context context) {
+        LogTools.showLoge("Clearing the notifications");
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager nm = (NotificationManager) context
+                .getSystemService(ns);
+        nm.cancelAll();
+        LogTools.showLoge( "Cleared notification");
     }
 }

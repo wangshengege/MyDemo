@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="240px"
     android:orientation="vertical"
+    android:background="@drawable/item_selector"
     android:gravity="center_horizontal">
     <RelativeLayout
         android:layout_width="wrap_content"

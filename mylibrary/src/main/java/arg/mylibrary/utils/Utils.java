@@ -702,18 +702,6 @@ public class Utils {
     }
 
     /**
-     * 外置存储卡的路径
-     *
-     * @return
-     */
-    public static String getExternalStorePath() {
-        if (FileAccessor.isExistExternalStore()) {
-            return Environment.getExternalStorageDirectory().getAbsolutePath();
-        }
-        return null;
-    }
-
-    /**
      * 内存的大小
      */
     public static long getAvailaleSize() {

@@ -11,22 +11,26 @@
             android:id="@+id/iv_dx1"
             android:layout_width="320px"
             android:layout_height="365px"
-            android:src="@drawable/ic_dx1"/>
+            android:src="@drawable/ic_dx1"
+            android:background="@drawable/item_selector"/>
         <ImageView
             android:id="@+id/iv_dx2"
             android:layout_width="320px"
             android:layout_height="365px"
             android:layout_marginLeft="20px"
+            android:background="@drawable/item_selector"
             android:src="@drawable/ic_dx2"/>
         <ImageView
             android:id="@+id/iv_dx3"
             android:layout_width="320px"
             android:layout_height="365px"
+            android:background="@drawable/item_selector"
             android:layout_marginLeft="20px"
             android:src="@drawable/ic_dx3"/>
         <ImageView
             android:id="@+id/iv_dx4"
             android:layout_width="320px"
+            android:background="@drawable/item_selector"
             android:layout_height="365px"
             android:layout_marginLeft="20px"
             android:src="@drawable/ic_dx4"/>
@@ -40,11 +44,13 @@
             android:id="@+id/iv_dx5"
             android:layout_width="320px"
             android:layout_height="365px"
+            android:background="@drawable/item_selector"
             android:src="@drawable/ic_dx5"/>
         <ImageView
             android:id="@+id/iv_dx6"
             android:layout_width="320px"
             android:layout_height="365px"
+            android:background="@drawable/item_selector"
             android:layout_marginLeft="20px"
             android:src="@drawable/ic_dx6"/>
         <ImageView
@@ -52,11 +58,13 @@
             android:layout_width="320px"
             android:layout_height="365px"
             android:layout_marginLeft="20px"
+            android:background="@drawable/item_selector"
             android:src="@drawable/ic_dx7"/>
         <ImageView
             android:id="@+id/iv_dx8"
             android:layout_width="320px"
             android:layout_height="365px"
+            android:background="@drawable/item_selector"
             android:layout_marginLeft="20px"
             android:src="@drawable/ic_dx8"/>
     </LinearLayout>

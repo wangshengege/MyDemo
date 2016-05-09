@@ -22,39 +22,41 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.atobo.safecoo.common.SafeCooConfig;
 import com.atobo.safecoo.ui.GameActivity;
 import com.atobo.safecoo.ui.InteractionActivity;
+import com.atobo.safecoo.ui.LocalFileActivity;
 import com.atobo.safecoo.ui.PlayHomeActivity;
-import com.atobo.safecoo.ui.SafeActivity;
 import com.atobo.safecoo.ui.SafeCooActivity;
-import com.atobo.safecoo.ui.RecommendActivity;
 import com.atobo.safecoo.ui.biz.BaseActivity;
-import com.lidroid.xutils.view.annotation.ViewInject;
 
-import arg.mylibrary.biz.YSApplication;
+import arg.mylibrary.common.SystemBarTintManager;
 import arg.mylibrary.utils.Tools;
 
 /**
  * ws
  * 主界面
- * */
+ */
 public class MainActivity extends BaseActivity {
     private static final int[][] BTNS_RES = {
             {R.id.ll_menu1, R.string.menu_menu1, R.drawable.ic_menu01},
             {R.id.ll_menu2, R.string.menu_menu2, R.drawable.ic_menu02},
             {R.id.ll_menu3, R.string.menu_menu3, R.drawable.ic_menu03},
             {R.id.ll_menu4, R.string.menu_menu4, R.drawable.ic_menu04},
-            {R.id.ll_menu5, R.string.menu_menu5, R.drawable.ic_menu05},
-            {R.id.ll_menu6, R.string.menu_menu6, R.drawable.ic_menu06},
+            {R.id.ll_menu6, R.string.menu_menu5, R.drawable.ic_menu06},
+            {R.id.ll_menu5, R.string.menu_menu6, R.drawable.ic_menu05},
     };
-    public static void startAction(Context ctx){
-        Intent intent=new Intent(ctx,MainActivity.class);
+
+    public static void startAction(Context ctx) {
+        Intent intent = new Intent(ctx, MainActivity.class);
         ctx.startActivity(intent);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setViewId(R.layout.activity_main);
+        showImmerseStatusBar(R.color.transparent);
         init();
     }
 
@@ -77,28 +79,46 @@ public class MainActivity extends BaseActivity {
             switch (index) {
                 case 0://安酷大学
                     //BrowserUtils.checkApp(self,"");
-                  SafeCooActivity.startAction(self);
-                   // IjkVideoActicity.intentTo(self, IjkVideoActicity.PlayMode.landScape, IjkVideoActicity.PlayType.vid, videoId, false);
+                    SafeCooActivity.startAction(self);
+                    // IjkVideoActicity.intentTo(self, IjkVideoActicity.PlayMode.landScape, IjkVideoActicity.PlayType.vid, videoId, false);
                     break;
-                case 1://安酷演播室
-                   PlayHomeActivity.startAction(self,0);
+                case 1://安酷tv
+                    PlayHomeActivity.startAction(self, 0);
                     break;
                 case 2://直播互动
                     InteractionActivity.startAction(self);
+                    //VideoPlayerActivity.startAction(self,"http://dlqncdn.miaopai.com/stream/MVaux41A4lkuWloBbGUGaQ__.mp4",2);
                     break;
                 case 3://安全游戏
                     GameActivity.startAction(self);
                     break;
-                case 4://安全视频
-                   // SafeActivity.startAction(self);
-                    PlayHomeActivity.startAction(self,1);
+                case 4://本地文件
+                    // PlayHomeActivity.startAction(self,1);
+                   /* if(SafeCooConfig.PREVIEW){
+                        PlayHomeActivity.startAction(self,1);
+                    }else*/
+                    LocalFileActivity.startAction(self);
                     break;
                 case 5://精品推荐
-                    PlayHomeActivity.startAction(self,2);
-                    //RecommendActivity.startAction(self);
+                    PlayHomeActivity.startAction(self, 2);
                     break;
             }
         }
     };
+    long time;
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == event.KEYCODE_BACK) {
+            if (Tools.getTimeStamp()- time< 1000) {
+                JXApplication.getInstance().exit();
+                return true;
+            } else {
+                Tools.showToast(self, getResources().getString(R.string.press_again_exit));
+                time = Tools.getTimeStamp();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
