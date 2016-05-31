@@ -138,7 +138,7 @@ public class FileOpenUtils {
                 ||eN.equals("mid") || eN.equals("mp3") || eN.equals("MP3") || eN.equals("ogg")|| eN.equals("3gpp")){
             return FileType.AUDIO;
         }else if(eN.equals("3gp") || eN.equals("3GP")
-                || eN.equals("mp4") || eN.equals("MP4")){
+                || eN.equals("mp4") || eN.equals("MP4") || eN.equals("avi")){
             return FileType.VODIO;
         }else if(eN.equals("doc") || eN.equals("docx")||eN.equals("rtf")){
             return FileType.WORD;

@@ -3,7 +3,6 @@ package com.atobo.safecoo.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.atobo.safecoo.R;
 import com.atobo.safecoo.common.SafeCooConfig;
@@ -11,10 +10,7 @@ import com.atobo.safecoo.net.IPConfig;
 import com.atobo.safecoo.ui.biz.BackActivity;
 import com.atobo.safecoo.utils.BrowserUtils;
 
-import arg.mylibrary.common.FileAccessor;
-import arg.mylibrary.net.IpConfig;
 import arg.mylibrary.net.NetworkUtil;
-import arg.mylibrary.utils.LogTools;
 import arg.mylibrary.utils.Tools;
 
 /**
@@ -36,10 +32,10 @@ public class SafeCooActivity extends BackActivity implements View.OnClickListene
             View v = findViewById(res[i]);
             v.setTag(i);
             v.setOnClickListener(this);
-            if (i == 8 && !SafeCooConfig.PREVIEW) {
+           /* if (i == 8 && !SafeCooConfig.PREVIEW) {
                 ImageView iv = (ImageView) v;
                 iv.setImageResource(R.drawable.ic_bdsp);
-            }
+            }*/
         }
 
 
@@ -51,7 +47,8 @@ public class SafeCooActivity extends BackActivity implements View.OnClickListene
         if (SafeCooConfig.PREVIEW) {
             offline(index);
         } else {
-            online(index);
+           // online(index);
+            offline(index);
         }
 
     }
@@ -76,11 +73,9 @@ public class SafeCooActivity extends BackActivity implements View.OnClickListene
             LogTools.logi(self, path);*/
             BrowserUtils.startB(self, path);
         } else {
-            String path = "http://" + NetworkUtil.getIP(self) + ":8080/anku1/story_html5.html";
-            // String path=String.format("file://%s/anku/anku1/story_html5.html", FileAccessor.getExternalStorePath());
-            LogTools.logi(self, path);
-            BrowserUtils.startB(self, path);
-            //   Utils.startBrowser(self, "http://localhost:8080/anku1/story_html5.html");
+            /*String path = "http://" + NetworkUtil.getIP(self) + ":8080/anku1/story_html5.html";
+            BrowserUtils.startB(self, path);*/
+            PlayHomeActivity.startAction(self,1);
         }
     }
 }

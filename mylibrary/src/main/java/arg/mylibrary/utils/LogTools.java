@@ -2,13 +2,15 @@ package arg.mylibrary.utils;
 
 import android.util.Log;
 
+import com.orhanobut.logger.Logger;
+
+import arg.mylibrary.biz.YSApplication;
 import arg.mylibrary.biz.YsConfig;
 
 /**
  * 打印log相关类
  */
 public class LogTools {
-    private static final String LOG = "com.hengyi.dectorDoc";
     private boolean isDeubg=true;
     private static LogTools instance;
 
@@ -25,25 +27,25 @@ public class LogTools {
 
     public static void showLogi(String msg) {
         if(getInstance().isDeubg){
-            Log.i(LOG, msg);
+            Logger.i(msg);
         }
     }
 
     public static void showLogi(String tag, String msg) {
         if(getInstance().isDeubg){
-        Log.i(tag, msg);
+        Logger.i(tag, msg);
         }
     }
 
     public static void showLogw(String msg) {
         if(getInstance().isDeubg){
-        Log.w(LOG, msg);
+        Logger.w(msg);
         }
     }
 
     public static void showLoge(String msg) {
         if(getInstance().isDeubg){
-        Log.e(LOG, msg);}
+        Logger.e(msg);}
     }
 
     /**
@@ -52,7 +54,7 @@ public class LogTools {
      */
     public static void logi(Object cls, String msg) {
         if(getInstance().isDeubg) {
-            Log.i(cls.getClass().getSimpleName(), msg);
+            Logger.i(cls.getClass().getSimpleName(), msg);
         }
     }
 
@@ -62,7 +64,7 @@ public class LogTools {
      */
     public static void logw(Object cls, String msg) {
         if(getInstance().isDeubg) {
-            Log.w(cls.getClass().getSimpleName(), msg);
+            Logger.w(cls.getClass().getSimpleName(), msg);
         }
     }
 
@@ -72,7 +74,7 @@ public class LogTools {
      */
     public static void logd(Object cls, String msg) {
         if(getInstance().isDeubg) {
-            Log.d(cls.getClass().getSimpleName(), msg);
+            Logger.d(cls.getClass().getSimpleName(), msg);
         }
     }
 
@@ -82,7 +84,7 @@ public class LogTools {
      */
     public static void loge(Object cls, String msg) {
         if(getInstance().isDeubg) {
-            Log.e(cls.getClass().getSimpleName(), msg);
+            Logger.e(cls.getClass().getSimpleName(), msg);
         }
     }
     /**
@@ -91,7 +93,7 @@ public class LogTools {
      */
     public static void e(String tag, String msg) {
         if(getInstance().isDeubg) {
-            Log.e(tag,msg);
+            Logger.e(tag,msg);
         }
     }
     /**
@@ -100,7 +102,7 @@ public class LogTools {
      */
     public static void i(String tag, String msg) {
         if(getInstance().isDeubg) {
-            Log.i(tag,msg);
+            Logger.i(tag, msg);
         }
     }
     /**
@@ -109,7 +111,7 @@ public class LogTools {
      */
     public static void v(String tag, String msg) {
         if(getInstance().isDeubg) {
-            Log.v(tag,msg);
+            Logger.v(tag, msg);
         }
     }
     /**
@@ -118,7 +120,16 @@ public class LogTools {
      */
     public static void d(String tag, String msg) {
         if(getInstance().isDeubg) {
-            Log.d(tag,msg);
+            Logger.d(tag, msg);
+        }
+    }
+    /**
+     * @param tag 标记
+     * @param msg 日志内容
+     */
+    public static void w(String tag, String msg) {
+        if(getInstance().isDeubg) {
+            Logger.w(tag,msg);
         }
     }
 }

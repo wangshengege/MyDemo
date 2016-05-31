@@ -45,6 +45,6 @@ public class LoadingActivity extends BaseActivity {
                 finish();
             }
         }.start();
-        UmengMsgManager.openPush();
+//        UmengMsgManager.openPush();
     }
 }

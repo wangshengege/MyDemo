@@ -73,7 +73,7 @@ public class ImgLoadUtils {
      * @param listener 加载监听
      */
     public static void loadImageRes(String url, ImageView imageView, DisplayImageOptions options, ImageLoadingListener listener) {
-        LogTools.logi(TAG, "loadImageRes:" + url);
+        LogTools.i(TAG, "loadImageRes:" + url);
         if(Tools.isEmpty(url)){
             url="drawable://"+ R.drawable.ic_launcher;
         }

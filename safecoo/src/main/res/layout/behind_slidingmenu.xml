@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="46dip"
+        android:layout_height="110px"
         android:background="@color/green_color"
         android:gravity="center_vertical"
         android:padding="0.0px" >

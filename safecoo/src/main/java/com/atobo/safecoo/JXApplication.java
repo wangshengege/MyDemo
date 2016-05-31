@@ -11,8 +11,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.atobo.safecoo.common.PolyvDemoService;
+import com.atobo.safecoo.common.SafeCooConfig;
 import com.atobo.safecoo.common.UmengMsgManager;
 import com.atobo.safecoo.ftp.FtpServerService;
+import com.atobo.safecoo.ui.PlayHomeActivity;
 import com.atobo.safecoo.ui.ftp.FtpActivity;
 import com.easefun.polyvsdk.PolyvSDKClient;
 import com.easefun.polyvsdk.SDKUtil;
@@ -24,12 +26,14 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.net.InetAddress;
 
 import arg.mylibrary.biz.YSApplication;
 import arg.mylibrary.utils.LogTools;
+import arg.mylibrary.utils.Tools;
 
 /**
  * Created by ws on 2016/3/29.
@@ -64,7 +68,7 @@ public class JXApplication extends YSApplication {
     public void initPolyvCilent() {
         File saveDir = null;
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            saveDir = new File(Environment.getExternalStorageDirectory().getPath() + "/safecooDownload");
+            saveDir = new File(Environment.getExternalStorageDirectory().getPath() + "/safecoo/Download");
             if (saveDir.exists() == false)
                 saveDir.mkdir();
         }
@@ -92,7 +96,8 @@ public class JXApplication extends YSApplication {
     public void onCreate() {
         super.onCreate();
         ctx = getApplicationContext();
-        UmengMsgManager.init();
+        Logger.init("jx").setMethodCount(3);//设置方法个数
+      //  UmengMsgManager.init();
         File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "safecoo/Cache");
         // This configuration tuning is custom. You can tune every option, you
         // may tune some of them,
@@ -119,7 +124,9 @@ public class JXApplication extends YSApplication {
 
         // Initialize ImageLoader with configuration
         ImageLoader.getInstance().init(config);
-        initPolyvCilent();
+        if(!PlayHomeActivity.isDebug) {
+            initPolyvCilent();
+        }
     }
 
     private class LoadConfigTask extends AsyncTask<String, String, String> {
@@ -161,7 +168,7 @@ public class JXApplication extends YSApplication {
 
         // Instantiate a Notification
         int icon = R.drawable.notification;
-        CharSequence tickerText = String.format(
+        CharSequence tickerText = String.format("%s\n%s",
                 context.getString(R.string.notif_server_starting), iptext);
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, tickerText, when);

@@ -15,6 +15,7 @@ import com.lidroid.xutils.http.RequestParams;
 import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
+import com.orhanobut.logger.Logger;
 
 import arg.mylibrary.biz.YSApplication;
 import arg.mylibrary.biz.YSException;
@@ -174,7 +175,7 @@ public class YsHttpUtils {
             public void onSuccess(ResponseInfo<String> arg0) {
                 JSONObject json = null;
                 try {
-                    LogTools.i(TAG, "back data:" + arg0.result);
+                    Logger.json(TAG, arg0.result);
                     json = new JSONObject(arg0.result);
                     call.setJson(json);
                     jsonCallback.onResponseSuccess(call);

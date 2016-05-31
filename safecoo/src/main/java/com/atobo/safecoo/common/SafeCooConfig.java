@@ -7,5 +7,6 @@ package com.atobo.safecoo.common;
  */
 public class SafeCooConfig {
     /**是否是演示版*/
-    public static final boolean PREVIEW=false;
+    public static final boolean PREVIEW=true;
+
 }

@@ -13,6 +13,15 @@ public class LocalVideoEntity {
     private  String displayName;
     private int width;
     private int height;
+    private String imagePath;
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     public String getPath() {
         return path;

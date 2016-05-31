@@ -38,7 +38,6 @@ public abstract class AbstractBaseActivity extends AutoLayoutActivity implements
 		initBaidu();
 	}
 	private void initBaidu(){
-		LogTools.logi(self,"baidu statrt");
 		// 设置AppKey
 		StatService.setAppKey("5d1f1b4790"); // appkey必须在mtj网站上注册生成，该设置建议在AndroidManifest.xml中填写，代码设置容易丢失
 

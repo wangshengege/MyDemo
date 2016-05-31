@@ -56,10 +56,10 @@ public abstract class BaseDao {
 	private static boolean isPost(String url,RequestParams params){
 
 		if(params==null || params.getQueryStringParams()!=null){
-			LogTools.e(TAG, "get url:"+url);
+			LogTools.i(TAG, "get url:"+url);
 			return false;
 		}else{
-			LogTools.e(TAG, "post url:"+url);
+			LogTools.i(TAG, "post url:"+url);
 			return true;
 		}
 	}

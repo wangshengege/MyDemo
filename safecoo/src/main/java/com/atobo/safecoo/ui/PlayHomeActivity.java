@@ -3,11 +3,7 @@ package com.atobo.safecoo.ui;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelXorXfermode;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,12 +25,10 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import arg.mylibrary.autolayout.AutoLinearLayout;
-import arg.mylibrary.common.CommonFunction;
 import arg.mylibrary.common.FileAccessor;
 import arg.mylibrary.net.RequestCall;
 import arg.mylibrary.utils.JSONUtils;
@@ -48,10 +42,11 @@ import arg.mylibrary.utils.Tools;
  * 显示类型，0是播放室，1是安全视频，2是精品推荐
  */
 public class PlayHomeActivity extends BackActivity {
+    public static boolean isDebug=true;//是否是离线
     //标题资源
     private static final int[][] TITLE_RES = {
-            {R.string.menu_menu2, R.drawable.ic_ybs, R.drawable.ic_ybs_tb},
-            {R.string.menu_menu5, R.drawable.ic_safe, R.drawable.ic_safe_tab},
+            {R.string.menu_menu2, R.drawable.ic_safe, R.drawable.ic_ybs_tb},
+            {},
             {R.string.menu_menu6, R.drawable.ic_tj, R.drawable.ic_jp_tb}
     };
     @ViewInject(R.id.gv_videolist)
@@ -79,10 +74,7 @@ public class PlayHomeActivity extends BackActivity {
             R.drawable.ic_ybs7, R.drawable.ic_ybs8,
             R.drawable.ic_ybs9, R.drawable.ic_ybs10,
             R.drawable.ic_ybs11, R.drawable.ic_ybs12},
-            {R.drawable.ic_aq1, R.drawable.ic_aq2,
-                    R.drawable.ic_aq3, R.drawable.ic_aq4,
-                    R.drawable.ic_aq5, R.drawable.ic_aq6,
-                    R.drawable.ic_aq7, R.drawable.ic_aq8},
+            {R.drawable.ic_hxp1, R.drawable.ic_hxp2},
             {R.drawable.ic_jp1, R.drawable.ic_jp2,
                     R.drawable.ic_jp3, R.drawable.ic_jp4,
                     R.drawable.ic_jp5, R.drawable.ic_jp6,
@@ -92,7 +84,7 @@ public class PlayHomeActivity extends BackActivity {
 
     /**
      * @param ctx
-     * @param type 显示类型，0是播放室，1是安全视频，2是精品推荐
+     * @param type 显示类型，0是播放室，1是化学品泄漏的视频，2是精品推荐
      */
     public static void startAction(Context ctx, int type) {
         if (type > 2 || type < 0) {
@@ -110,33 +102,54 @@ public class PlayHomeActivity extends BackActivity {
 
         Intent intent = getIntent();
         type = intent.getIntExtra("type", 0);
+        initData();
+        mAdapter = new PalyAdapter(self, items);
+        initView();
 
-        if (!SafeCooConfig.PREVIEW) {
-           getData(-1);
+    }
+    //初始化数据
+    private void initData(){
+        if (!isDebug && type!=1) {//在线版数据从网上拉取
+            getData(-1);
         } else {
-            ImageView iv = new ImageView(self);
-            iv.setLayoutParams(new AutoLinearLayout.LayoutParams(AutoLinearLayout.LayoutParams.WRAP_CONTENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT));
-            iv.setImageResource(TITLE_RES[type][2]);
-            ll_tab_group.addView(iv);
             for (int i = 0; i < res[type].length; i++) {
                 VideoEntiity en = new VideoEntiity();
                 en.setViodeoImg("drawable://" + res[type][i]);
                 items.add(en);
             }
         }
-        mAdapter = new PalyAdapter(self, items);
-        initView();
     }
-
     //初始化界面
     private void initView() {
-        iv_title.setImageResource(TITLE_RES[type][1]);
-        tv_title.setText(TITLE_RES[type][0]);
+        if (type == 0) {
+            iv_title.setImageResource(TITLE_RES[type][1]);
+            tv_title.setText(TITLE_RES[type][0]);
+            if(isDebug){//预览版的用图片代替副标题
+                ImageView iv = new ImageView(self);
+                iv.setLayoutParams(new AutoLinearLayout.LayoutParams(AutoLinearLayout.LayoutParams.WRAP_CONTENT, AutoLinearLayout.LayoutParams.WRAP_CONTENT));
+                iv.setImageResource(TITLE_RES[type][2]);
+                ll_tab_group.addView(iv);
+            }
+        } else if(type==1){//化学品泄漏视频将标题隐藏
+            findViewById(R.id.ll_top).setVisibility(View.INVISIBLE);
+        }else {//精品推荐
+            iv_title.setImageResource(TITLE_RES[type][1]);
+            tv_title.setText(TITLE_RES[type][0]);
+            if(isDebug){
+            TextView tv = new TextView(self);
+            tv.setText("安全真经");
+            AutoLinearLayout.LayoutParams params = new AutoLinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.gravity = Gravity.CENTER;
+            tv.setLayoutParams(params);
+            getSelText(tv);
+            ll_tab_group.addView(tv);}
+        }
+
         gv_videolist.setAdapter(mAdapter);
         gv_videolist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!SafeCooConfig.PREVIEW) {
+                if (!isDebug && type!=1) {
                     IjkVideoActicity.intentTo(self, IjkVideoActicity.PlayMode.defaults, IjkVideoActicity.PlayType.vid, items.get(position).getPath(), true);
                 } else {
                     if (position < 0 || position > 2) {
@@ -160,23 +173,26 @@ public class PlayHomeActivity extends BackActivity {
         String path;
         if (type == 2) {
             path = String.format("%s/anku/xyj%d.mp4", FileAccessor.getExternalStorePath(), position + 1);
-        } else {
+        } else if (type == 0) {
             path = String.format("%s/anku/ak%d.mp4", FileAccessor.getExternalStorePath(), position + 1);
+        } else {
+            path = String.format("%s/anku/.hxp/hxp%d.mp4", FileAccessor.getExternalStorePath(), position + 1);
         }
-       // VideoPlayerActivity.startAction(self, path);
+        // VideoPlayerActivity.startAction(self, path);
         VideoPlayActivity.startAction(self, path);
     }
 
     @Override
     public void onResponseSuccess(RequestCall call) {
         super.onResponseSuccess(call);
-        if(call.getState()==200){
-        if (videoType == null) {
-            praseTab(JSONUtils.getJJsonArr(call.getJson(), "vedioCate"));
-        }
-        JSONArray jsarr = JSONUtils.getJJsonArr(call.getJson(), "vedio");
-        praseList(jsarr);}else{
-            Tools.showToast(self,call.getMsg());
+        if (call.getState() == 200) {
+            if (videoType == null) {
+                praseTab(JSONUtils.getJJsonArr(call.getJson(), "vedioCate"));
+            }
+            JSONArray jsarr = JSONUtils.getJJsonArr(call.getJson(), "vedio");
+            praseList(jsarr);
+        } else {
+            Tools.showToast(self, call.getMsg());
         }
     }
 
@@ -222,27 +238,29 @@ public class PlayHomeActivity extends BackActivity {
             ll_tab_group.addView(tv);
         }
     }
+
     //视频小类型
-    private void getData(int t){
+    private void getData(int t) {
         String pageType;
-       // 1是安酷tv，2是精品推荐
-        if(type==2){//精品推荐
-            pageType="1";
-        }else{
-            pageType="0";
+        // 1是安酷tv，2是精品推荐
+        if (type == 2) {//精品推荐
+            pageType = "1";
+        } else {
+            pageType = "0";
         }
-        if(pd==null){
-            pd=new ProgressDialog(self);
+        if (pd == null) {
+            pd = new ProgressDialog(self);
             pd.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             pd.setIndeterminate(true);
             pd.setMessage("正在加载。。。");
             pd.setCanceledOnTouchOutside(false);
         }
-        if (!pd.isShowing()){
+        if (!pd.isShowing()) {
             pd.show();
         }
         AppDao.getVedio(pageType, t == -1 ? "" : String.valueOf(t), self);
     }
+
     //未选中的选项卡
     private TextView getNorText(TextView tv) {
         tv.setTextColor(getResources().getColor(R.color.gray));
@@ -252,8 +270,9 @@ public class PlayHomeActivity extends BackActivity {
         layoutParams.setMargins(PxUtil.dip2px(self, 10), 0, 0, 0);
         return tv;
     }
+
     //根据屏幕分辨率获取文字大小
-    private int getTextSize(){
+    private int getTextSize() {
        /*int w= PxUtil.getScreenWidth(self);
         LogTools.logi(PlayHomeActivity.this,"w:"+w);
         if (w<=1290){//低清
@@ -263,15 +282,16 @@ public class PlayHomeActivity extends BackActivity {
         }else {//超清
             return w/200;
         }*/
-        int textSize=PxUtil.sp2px(self,6);
-        LogTools.logi(self,"testSize:"+textSize);
-        if (textSize<15){
-            textSize=17;
-        }else if(textSize > 25){
-            textSize=15;
+        int textSize = PxUtil.sp2px(self, 6);
+        LogTools.logi(self, "testSize:" + textSize);
+        if (textSize < 15) {
+            textSize = 17;
+        } else if (textSize > 25) {
+            textSize = 15;
         }
         return textSize;
     }
+
     //选中的选项卡
     private TextView getSelText(TextView tv) {
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) tv.getLayoutParams();
@@ -281,6 +301,7 @@ public class PlayHomeActivity extends BackActivity {
         tv.setBackgroundResource(R.drawable.bg_tab_text);
         return tv;
     }
+
     //解析数组
     private void praseList(JSONArray jsarr) {
         items.clear();
@@ -301,7 +322,7 @@ public class PlayHomeActivity extends BackActivity {
     @Override
     public void onFinishRequest(RequestCall call) {
         super.onFinishRequest(call);
-        if(pd!=null && pd.isShowing()){
+        if (pd != null && pd.isShowing()) {
             pd.dismiss();
         }
     }

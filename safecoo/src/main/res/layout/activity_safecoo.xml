@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:fitsSystemWindows="true"
-    android:paddingLeft="120px"
     android:background="@drawable/bg">
     <LinearLayout
+        android:layout_marginLeft="120px"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="50px"
@@ -25,7 +25,7 @@
             android:textSize="65px"
             android:layout_marginLeft="10px"
             android:textColor="@color/white"
-            android:text="安酷大学"/></LinearLayout>
+            android:text="@string/menu_menu1"/></LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

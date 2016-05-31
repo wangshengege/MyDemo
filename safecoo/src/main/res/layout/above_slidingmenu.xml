@@ -52,6 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:gravity="bottom"
+        android:layout_marginBottom="50dp"
         android:orientation="vertical" >
 
         <TextView
@@ -61,8 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="@string/instruction_pre"
-            android:textColor="@color/background"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:textColor="@color/background"/>
 
         <TextView
             android:id="@+id/instruction"
@@ -84,10 +85,11 @@
             android:minWidth="150dip"
             android:paddingLeft="15px"
             android:paddingRight="15px"
-            android:visibility="gone"
+            android:text="12788"
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="22sp"
+            android:visibility="gone"
             android:textStyle="bold" />
 
         <LinearLayout

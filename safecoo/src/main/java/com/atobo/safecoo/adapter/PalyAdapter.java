@@ -58,15 +58,6 @@ public class PalyAdapter extends BaseAdapter{
         }
         VideoEntiity en= (VideoEntiity) getItem(position);
         ImgLoadUtils.loadImageRes(en.getViodeoImg(),holder.iv_mv);
-        if(!SafeCooConfig.PREVIEW){
-            if(position<9){
-                holder.tv_num.setText("00"+position);
-            }else if(position>8 && position<99){
-                holder.tv_num.setText("0"+position);
-            }else{
-                holder.tv_num.setText(""+position);
-            }
-        }
         holder.tv_title.setText(en.getTitle());
         return convertView;
     }

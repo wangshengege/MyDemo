@@ -8,6 +8,7 @@
     android:paddingTop="35px"
     android:background="@drawable/bg">
     <LinearLayout
+        android:id="@+id/ll_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -38,8 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:horizontalSpacing="25px"
-        android:verticalSpacing="40px"
+        android:verticalSpacing="25px"
         android:numColumns="4"
-        android:layout_marginTop="50px"
-        android:layout_marginBottom="70px"/>
+        android:layout_marginTop="45px"
+        android:layout_marginBottom="60px"/>
 </LinearLayout>

@@ -28,6 +28,8 @@ import com.atobo.safecoo.ui.InteractionActivity;
 import com.atobo.safecoo.ui.LocalFileActivity;
 import com.atobo.safecoo.ui.PlayHomeActivity;
 import com.atobo.safecoo.ui.SafeCooActivity;
+import com.atobo.safecoo.ui.VideoListActivity;
+import com.atobo.safecoo.ui.VideoPlayActivity;
 import com.atobo.safecoo.ui.biz.BaseActivity;
 
 import arg.mylibrary.common.SystemBarTintManager;
@@ -83,7 +85,11 @@ public class MainActivity extends BaseActivity {
                     // IjkVideoActicity.intentTo(self, IjkVideoActicity.PlayMode.landScape, IjkVideoActicity.PlayType.vid, videoId, false);
                     break;
                 case 1://安酷tv
-                    PlayHomeActivity.startAction(self, 0);
+                    if(SafeCooConfig.PREVIEW && PlayHomeActivity.isDebug)
+                        VideoListActivity.startAction(self,1);
+                    else{
+                   PlayHomeActivity.startAction(self, 0);}
+                  //  PlayHomeActivity.startAction(self, 0);
                     break;
                 case 2://直播互动
                     InteractionActivity.startAction(self);

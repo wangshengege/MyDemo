@@ -12,7 +12,9 @@ import com.atobo.safecoo.R;
 import com.atobo.safecoo.common.VideoThumbnailLoader;
 import com.atobo.safecoo.entity.LocalVideoEntity;
 import com.atobo.safecoo.ui.VideoPlayActivity;
+import com.atobo.safecoo.utils.ImgLoadUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -21,13 +23,9 @@ import java.util.ArrayList;
 public class VideoListAdapter extends BaseAdapter{
     private ArrayList<LocalVideoEntity> items;
     private Context ctx;
-    private int focusIndex;
     public VideoListAdapter(ArrayList<LocalVideoEntity> items, Context ctx) {
         this.items = items;
         this.ctx = ctx;
-    }
-    public void setFocus(int index){
-        focusIndex=index;
     }
 
     @Override
@@ -61,18 +59,17 @@ public class VideoListAdapter extends BaseAdapter{
 
     public void onBindViewHolder(ViewHolder holder, final int position) {
         final LocalVideoEntity entiity= (LocalVideoEntity) getItem(position);
-        holder.tv_title.setText(entiity.getTitle());
+        holder.tv_title.setText(entiity.getDisplayName());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 VideoPlayActivity.startAction(ctx, entiity.getPath());
             }
         });
-        if(focusIndex==position){
-            holder.itemView.setSelected(true);
-        }else{
-            holder.itemView.setSelected(false);
-        }
+        File f=new File(entiity.getImagePath());
+        if(f.exists()){//判断图片是否存在
+            ImgLoadUtils.loadImageRes("file://"+entiity.getImagePath(),holder.iv_mv);
+        }else
         VideoThumbnailLoader.getIns().display(entiity,holder.iv_mv);
     }
     private String getFileName(String path){

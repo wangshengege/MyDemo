@@ -1,15 +1,13 @@
 <resources>
-    <string name="app_name">安酷云TV</string>
+    <string name="app_name">安酷在线</string>
 
         <!--首页菜单数据-->
-    <string name="menu_menu1">安酷大学</string>
+    <string name="menu_menu1">安酷学院</string>
     <string name="menu_menu2">安酷视频</string>
     <string name="menu_menu3">直播互动</string>
     <string name="menu_menu4">安全游戏</string>
     <string name="menu_menu5">企业专区</string>
     <string name="menu_menu6">精品推荐</string>
-
-    <string name="versionnum">V1.0.0</string>
     <string name="press_again_exit">再按一次退出</string>
     <string name="about">关于</string>
     <string name="report">反馈建议</string>

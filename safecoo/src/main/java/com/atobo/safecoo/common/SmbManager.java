@@ -1,6 +1,7 @@
 package com.atobo.safecoo.common;
 
 import android.os.Looper;
+import android.util.Log;
 
 import com.atobo.safecoo.entity.FileInfo;
 
@@ -27,6 +28,7 @@ import jcifs.smb.SmbFileInputStream;
  * 介绍：
  */
 public class SmbManager {
+    final String TAG="SmbManager";
     private String ip = "";//pc的Ip地址
     private String account = "";//账户
     private String prssword = "";//密码
@@ -108,6 +110,7 @@ public class SmbManager {
 
         public GetFileDirThread(String remoteUrl, FileDirListener listener) {
             this.remoteUrl = remoteUrl;
+            Log.i(TAG, remoteUrl + "");
             this.listener = listener;
         }
 
@@ -118,7 +121,6 @@ public class SmbManager {
             SmbFile remoteFile;
             try {
                 remoteFile = new SmbFile(remoteUrl);
-                LogTools.logi(SmbManager.this, remoteUrl);
                 remoteFile.connect();
                 SmbFile[] files = remoteFile.listFiles();
                 if (listener != null) {
@@ -139,17 +141,17 @@ public class SmbManager {
                 if (listener != null) {
                     listener.error(new YSException(e));
                 }
-                LogTools.logw(SmbManager.this, e.getMessage());
+                Log.e(TAG, e.getMessage() + "");
             } catch (SmbException e) {
                 if (listener != null) {
                     listener.error(new YSException(e));
                 }
-                LogTools.logw(SmbManager.this, e.getMessage());
+                Log.e(TAG, e.getMessage() + "");
             } catch (Exception e) {
                 if (listener != null) {
                     listener.error(new YSException(e));
                 }
-                LogTools.logw(SmbManager.this, e.getMessage());
+                Log.e(TAG, e.getMessage()+"");
             }
         }
     }
@@ -174,17 +176,18 @@ public class SmbManager {
             OutputStream out = null;
             try {
                 SmbFile remoteFile = new SmbFile(remoteUrl);
-                LogTools.logi(SmbManager.this, remoteUrl);
+                Log.i(TAG, remoteUrl);
                 remoteFile.connect();
                 if (remoteFile == null) {
                     if (downloadListener != null) {
                         downloadListener.error(new YSException(new Throwable("共享文件不存在")));
                     }
-                    LogTools.logi(SmbManager.this, "共享文件不存在");
+                    Log.i(TAG, "共享文件不存在");
                     return;
                 }
                 String fileName = remoteFile.getName();
                 File localFile = new File(localDir + File.separator + fileName);
+                Log.i(TAG,localFile.getAbsolutePath());
                 if (localFile.isFile() && localFile.length() == remoteFile.length()) {//文件已存在不用重新下载
                     if (downloadListener != null) {
                         downloadListener.finsh(localFile);
@@ -215,7 +218,7 @@ public class SmbManager {
                 if (downloadListener != null) {
                     downloadListener.error(new YSException(e));
                 }
-                LogTools.logw(SmbManager.this, e.getMessage());
+                Log.e(TAG, e.getMessage()+"");
             } catch (Exception e) {
                 if (downloadListener != null) {
                     downloadListener.error(new YSException(e));
